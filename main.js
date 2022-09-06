@@ -5,8 +5,32 @@ const FULL_HEART = '♥'
 // Your JavaScript code goes here!
 
 
+const hearts = document.querySelectorAll(".like-glyph")
+console.log(hearts)
 
-
+function handleLikes() {
+  hearts.forEach((heart) => {
+    mimicServerCall()
+    .then(() => {
+      heart.addEventListener('click', (e) => {
+        if(heart.textContent === EMPTY_HEART) {
+          heart.textContent = FULL_HEART
+        } else {
+          heart.textContent = EMPTY_HEART
+        }
+      } )
+    })
+    .catch((error) => {
+      const modal = document.querySelector('#modal')
+      modal.className = ''
+      modal.textContent = error
+    })
+  })
+}
+// fetch('https://ghibliapi.herokuapp.com/films/58611129-2dbc-4a81-a72f-77ddfc1b1b49')
+// .then(res => res.json())
+// .then(data => console.log(data))
+// handleLikes()
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
 //------------------------------------------------------------------------------
@@ -23,3 +47,4 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+handleLikes()
